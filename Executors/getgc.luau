@@ -7,11 +7,7 @@ class_members["getgc"]["Constructors"] = {}
 class_members["getgc"]["Methods"] = {}
 
 class_members["getgc"]["Arguments"] = {
-    {
-        ["Name"] = "includeTables",
-        ["Type"] = "boolean",
-        ["Optional"] = true
-    }
+    "boolean?"
 }
 
 class_members["getgc"]["Returns"] = {
@@ -29,42 +25,35 @@ class_members["getgc"]["Examples"] = {
         ["Code"] = [[
 local objects = getgc()
 
-for _, object in pairs(objects) do
-    print(typeof(object))
+for _, object in ipairs(objects) do
+    print(object)
 end
-]],
-
+        ]],
         ["Returns"] = {
-            "table of garbage collected objects"
+            "table"
         }
     },
 
     {
         ["Code"] = [[
-local tables = getgc(true)
+local functions = getgc(true)
 
-for _, value in pairs(tables) do
-    if type(value) == "table" then
-        print(value)
-    end
-end
-]],
-
+print(#functions)
+        ]],
         ["Returns"] = {
-            "table containing tables and other objects"
+            "number"
         }
     }
 }
 
 class_members["getgc"]["Errors"] = {
     {
-        ["Error"] = "attempt to call a nil value",
-        ["Cause"] = "Executor does not support getgc"
+        ["Error"] = "invalid argument #1 to 'getgc' (boolean expected)",
+        ["Cause"] = "The optional argument must be a boolean."
     },
-
     {
-        ["Error"] = "invalid argument #1",
-        ["Cause"] = "Argument must be boolean"
+        ["Error"] = "attempt to call a nil value",
+        ["Cause"] = "Executor does not support getgc."
     }
 }
 
@@ -72,25 +61,16 @@ class_members["getgc"]["Types"] = {
     ["Function"] = "table getgc(boolean includeTables?)"
 }
 
-class_members["getgc"]["Behavior"] = {
-    ["ReturnsFunctions"] = true,
-    ["ReturnsTables"] = true,
-    ["ReturnsUserdata"] = true,
-    ["ReturnsThreads"] = true,
-    ["ReturnsInstances"] = false
-}
+class_members["getgc"]["Description"] = "Returns garbage collected objects from the current Lua state."
 
-class_members["getgc"]["ObjectTypes"] = {
-    "function",
-    "table",
-    "userdata",
-    "thread"
+class_members["getgc"]["Notes"] = {
+    "Can return functions, tables, userdata, and other Lua objects.",
+    "The optional boolean may include additional object types.",
+    "Results depend on executor implementation."
 }
 
 class_members["getgc"]["Related"] = {
-    "getregistry",
-    "debug.getupvalue",
-    "debug.getconstants",
+    "getreg",
     "getgenv",
     "getrenv"
 }
